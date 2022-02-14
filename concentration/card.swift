@@ -21,11 +21,8 @@ class Cards{// make it class
     func getStatusOfCardMatched() -> Bool{
         return self.isMatched
     }
-    func makeFlipToFalse(){
-        self.isFlip = false
-    }
-    func makeFlipToTrue(){
-        self.isFlip = true
+    func updateFlip(_ flip: Bool){
+        self.isFlip = flip
     }
     func makeMatchToFalse(){
         self.isFlip = false

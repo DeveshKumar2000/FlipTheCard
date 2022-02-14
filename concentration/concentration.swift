@@ -14,7 +14,7 @@ class Concentration{//captialize
     private var arrayOfSelectedCards : [Cards] = []
     func choose(at index:Int) -> Bool{
         if card[index].getStatusOfCardFlip() == false{
-            card[index].makeFlipToTrue()
+            card[index].updateFlip(true)
         }
         return card[index].getStatusOfCardFlip()
     }
@@ -39,7 +39,7 @@ class Concentration{//captialize
     func makeAllCardMatched(){
         for cards in arrayOfSelectedCards{
             cards.makeMatchToTrue()
-            cards.makeFlipToTrue()
+            cards.updateFlip(true)
         }
     }
     func makeArrayOfSelectedCardEmpty(){
@@ -47,7 +47,7 @@ class Concentration{//captialize
     }
     func makeAllCardFlipToFalse(){
         for cards in arrayOfSelectedCards{
-            cards.makeFlipToFalse()
+            cards.updateFlip(false)
         }
     }
     func getIdentifier(_ index : Int) -> Int {
