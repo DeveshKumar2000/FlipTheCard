@@ -9,15 +9,28 @@ import Foundation
 
 
 class Cards{// make it class
-    var isFlip = false
-    var isMatched = false
-    var Identifier :Int
-    private static var autoIncrementIdentifier=0
-    private static func getSecretIdentifier() -> Int{
-        Cards.autoIncrementIdentifier += 1
-        return Cards.autoIncrementIdentifier
+    private var isFlip = false
+    private var isMatched = false
+    private var Identifier :Int
+    init(_ identifier : Int){
+        self.Identifier = identifier
     }
-    init(){
-        self.Identifier = Cards.getSecretIdentifier()
+    func getStatusOfCardFlip() -> Bool{
+        return self.isFlip
+    }
+    func getStatusOfCardMatched() -> Bool{
+        return self.isMatched
+    }
+    func updateFlip(_ flip: Bool){
+        self.isFlip = flip
+    }
+    func makeMatchToFalse(){
+        self.isFlip = false
+    }
+    func makeMatchToTrue(){
+        self.isFlip = true
+    }
+    func getIdentifier() -> Int{
+        return self.Identifier
     }
 }
