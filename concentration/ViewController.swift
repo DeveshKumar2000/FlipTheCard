@@ -47,38 +47,35 @@ class ViewController: UIViewController {
     private func updateViewFromModel(_ index:Int){
      
             let button = cardButtons[index]
-            let card = game.card[index]// use access controls
-            if card.isFlip == true {
+            let card = game.cardAtIndex(index)// use access controls
+            if card.getStatusOfCardFlip() == true {
                 let emojiChoose = emojiSelection(card)
                 button.setTitle(emojiChoose, for: UIControl.State.normal)
                 button.backgroundColor = UIColor.white
                 if arrayOfSelectedButtons.count<2{
                     arrayOfSelectedButtons.append(button)
-                    game.arrayOfSelectedCards.append(card)
+                    game.addCard(card)
                 }else{
                     // 2condition
                     let allSameButton = areAllSameCard()
                     if allSameButton{
-                        if let prev = game.arrayOfSelectedCards.last{
-                            if emojiString[prev.Identifier ] !=
-                                emojiString[card.Identifier]{
+                        if let prev = game.lastCardOfSelectedDeck(){
+                            if emojiString[prev.getIdentifier()] !=
+                                emojiString[card.getIdentifier()]{
                                 for but in arrayOfSelectedButtons{
                                     but.setTitle("", for: UIControl.State.normal)
                                     but.backgroundColor = UIColor.clear
                                     countOfCards -= 1
                                     but.isEnabled = false
                                 }
-                                for cards in game.arrayOfSelectedCards{
-                                    cards.isMatched = true
-                                    cards.isFlip=true
-                                }
+                                game.makeAllCardMatched()
                                 arrayOfSelectedButtons=[]
-                                game.arrayOfSelectedCards=[]
+                                game.makeArrayOfSelectedCardEmpty()
                                 arrayOfSelectedButtons.append(button)
-                                game.arrayOfSelectedCards.append(card)
+                                game.addCard(card)
                             }else{
                                 arrayOfSelectedButtons.append(button)
-                                game.arrayOfSelectedCards.append(card)
+                                game.addCard(card)
                             }
                         }
                     }else{
@@ -86,13 +83,11 @@ class ViewController: UIViewController {
                             but.setTitle("", for: UIControl.State.normal)
                             but.backgroundColor = UIColor.orange
                         }
-                        for cards in game.arrayOfSelectedCards{
-                            cards.isFlip = false
-                        }
+                        game.makeAllCardFlipToFalse()
                         arrayOfSelectedButtons=[]
-                        game.arrayOfSelectedCards=[]
+                        game.makeArrayOfSelectedCardEmpty()
                         arrayOfSelectedButtons.append(button)
-                        game.arrayOfSelectedCards.append(card)
+                        game.addCard(card)
                     }
                 }
             }
@@ -101,21 +96,23 @@ class ViewController: UIViewController {
         }
         }
     private func emojiSelection(_ card:Cards)->String {
-        if card.Identifier >= emojiString.count , emojiString.count > 0 {
+        if card.getIdentifier() >= emojiString.count  , emojiString.count > 0 {
             if let selectedEmoji = emojiChoiceString.randomElement() {
                 return selectedEmoji
             }else {
                 return "?"
             }
         }
-        return emojiString[card.Identifier]
+        return emojiString[card.getIdentifier()]
       
     }
+    
     private func areAllSameCard() -> Bool {
         let n = arrayOfSelectedButtons.count
         for i in 1..<n{
-            if emojiString[game.arrayOfSelectedCards[i].Identifier ] !=
-                emojiString[game.arrayOfSelectedCards[i-1].Identifier]{
+            
+            if emojiString[game.getIdentifier(i)] !=
+                emojiString[game.getIdentifier(i-1)]{
                 return false
             }
 

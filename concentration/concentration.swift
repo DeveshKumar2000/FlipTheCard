@@ -10,26 +10,54 @@ import UIKit
 
 
 class Concentration{//captialize
-    var card = [Cards]()
-    var arrayOfSelectedCards : [Cards] = []
+    private var card = [Cards]()
+    private var arrayOfSelectedCards : [Cards] = []
     func choose(at index:Int) -> Bool{
-        if card[index].isFlip == false{
-            card[index].isFlip = true
+        if card[index].getStatusOfCardFlip() == false{
+            card[index].makeFlipToTrue()
         }
-        return card[index].isFlip
+        return card[index].getStatusOfCardFlip()
     }
+    private var autoIncrementIdentifier=0
     func allFlipped()->Bool{ //need to refactor
         for cardInstances in card{
-            if cardInstances.isFlip == false{
+            if cardInstances.getStatusOfCardFlip() == false{
                 return false
             }
         }
         return true
     }
+    func cardAtIndex(_ index : Int) -> Cards{
+        return card[index]
+    }
+    func addCard(_ card : Cards){
+        arrayOfSelectedCards.append(card)
+    }
+    func lastCardOfSelectedDeck() -> Cards?{
+        return arrayOfSelectedCards.last
+    }
+    func makeAllCardMatched(){
+        for cards in arrayOfSelectedCards{
+            cards.makeMatchToTrue()
+            cards.makeFlipToTrue()
+        }
+    }
+    func makeArrayOfSelectedCardEmpty(){
+        arrayOfSelectedCards = []
+    }
+    func makeAllCardFlipToFalse(){
+        for cards in arrayOfSelectedCards{
+            cards.makeFlipToFalse()
+        }
+    }
+    func getIdentifier(_ index : Int) -> Int {
+       return arrayOfSelectedCards[index].getIdentifier()
+    }
     init(_ noOfCards:Int){
         for _ in 0...noOfCards{
-            let card1 = Cards()
-            card.append(card1)// add identifier property here : cannot add
+            autoIncrementIdentifier += 1
+            let card1 = Cards(autoIncrementIdentifier)
+            card.append(card1)
             card.append(card1)
         }
     }
