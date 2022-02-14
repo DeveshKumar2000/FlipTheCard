@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     @IBOutlet var cardButtons : [UIButton]!
     private lazy var noOfCardsPair : Int = (cardButtons.count+1)/2// make it pair from withoutPair
   
-    @IBOutlet weak var GameOver: UILabel!
+    @IBOutlet weak var gameOver: UILabel!
     private var arrayOfSelectedButtons : [UIButton] = []
     private var emojiString = ["👻","🎃","👻","🎃","🦇","🎃","🐵","💀","👻","🎃","👻","🦅","🦇","🎃","🐵","💀"]
     private var emojiChoiceString = ["🐢","🎃","👻","🦅","🦇","🎃","🧑🏻‍🎤","💀"]
@@ -27,20 +27,20 @@ class ViewController: UIViewController {
         if let cardNumber = cardButtons.firstIndex(of: sender){
             let needToUpdateView = game.choose(at: cardNumber)// return bool from choose
             if countOfCards <= 1{
-                GameOver.text="Game Over"
+                gameOver.text="Game Over"
             }
             if needToUpdateView{
                 updateViewFromModel(cardNumber)
                 flips += 1
             }else {
-                GameOver.text="Game Over"
+                gameOver.text="Game Over"
             }
         }else{
             
             print("wrong buttons")
         }
         if game.allFlipped(){
-            GameOver.text="Game Over"
+            gameOver.text="Game Over"
         }
        
     }
@@ -92,7 +92,7 @@ class ViewController: UIViewController {
                 }
             }
         if countOfCards <= 1{
-            GameOver.text="Game Over"
+            gameOver.text="Game Over"
         }
         }
     private func emojiSelection(_ card:Cards)->String {
